@@ -2,7 +2,7 @@ let listElement = document.querySelector('#app ul')
 let inputElement = document.querySelector('#app input')
 let buttonElement = document.querySelector('#app button')
 
-let tarefas = []
+let tarefas = JSON.parse(localStorage.getItem('@listaTarefas')) || []
 
 function renderTarefas(){
     listElement.innerHTML = ''
@@ -27,6 +27,8 @@ function renderTarefas(){
     })
 }
 
+renderTarefas()
+
 function adicionarTarefas(){
     if(inputElement.value === ''){
         alert('Digite alguma tarefa!')
@@ -38,6 +40,7 @@ function adicionarTarefas(){
         inputElement.value = ''
 
         renderTarefas()
+        salvarTarefas()
     }
 }
 
@@ -46,4 +49,9 @@ buttonElement.onclick = adicionarTarefas
 function deletarTarefas(posicao){
     tarefas.splice(posicao, 1)
     renderTarefas()
+    salvarTarefas()
+}
+
+function salvarTarefas(){
+    localStorage.setItem('@listaTarefas', JSON.stringify(tarefas) )
 }
